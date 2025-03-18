@@ -107,7 +107,7 @@ object BuildDockerImage : BuildType({
         }
         script {
             name = "Generate a Docker SBOM"
-            scriptContent = "%HOME%/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number%"
+            scriptContent = "/home/guyc/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number%"
         }    
     }
 })
