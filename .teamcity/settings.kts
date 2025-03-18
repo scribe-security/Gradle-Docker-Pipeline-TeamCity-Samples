@@ -112,7 +112,7 @@ object BuildDockerImage : BuildType({
         }
         script {
             name = "Generate a Docker SBOM"
-            scriptContent = "/home/guyc/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number%" + " -P %SCRIBE_TOKEN%" 
+            scriptContent = "/home/guyc/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number% -vv" + " -P %SCRIBE_TOKEN%" 
         }    
     }
 })
