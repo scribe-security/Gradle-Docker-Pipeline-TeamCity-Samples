@@ -32,7 +32,9 @@ version = "2024.07"
 project {
     subProject(SubProject)
 }
-
+params {
+        param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
+    }
 object SubProject : Project({
     name = "ValintDemo"
     buildType(TestSuite1)
@@ -94,9 +96,7 @@ object BuildDockerImage : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
-    params {
-        param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
-    }
+    
     
     }
     steps {
