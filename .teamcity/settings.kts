@@ -106,7 +106,7 @@ object BuildDockerImage : BuildType({
             }
         }
         script {
-            name = "Check System Info"
+            name = "Generate a Docker SBOM"
             scriptContent = "uname -a"
         }    
     }
