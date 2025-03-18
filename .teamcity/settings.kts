@@ -89,6 +89,7 @@ object BuildApp : BuildType({
     }
 })
 
+
 object BuildDockerImage : BuildType({
     name = "Build Docker Image"
     vcs {
@@ -96,8 +97,6 @@ object BuildDockerImage : BuildType({
     }
     params {
         param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
-    }
-    
     }
     steps {
         dockerCommand {
@@ -116,3 +115,5 @@ object BuildDockerImage : BuildType({
         }    
     }
 })
+
+
