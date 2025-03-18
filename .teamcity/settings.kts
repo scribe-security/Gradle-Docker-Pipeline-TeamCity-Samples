@@ -94,6 +94,9 @@ object BuildDockerImage : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
+params {
+    param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
+}
     
     }
     steps {
