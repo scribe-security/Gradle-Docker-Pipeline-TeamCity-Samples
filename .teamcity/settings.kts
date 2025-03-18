@@ -33,7 +33,7 @@ project {
 }
 
 object SubProject : Project({
-    name = "SubProject"
+    name = "ValintDemo"
     buildType(TestSuite1)
     buildType(TestReport)
     buildType(TestSuite2)
@@ -104,5 +104,9 @@ object BuildDockerImage : BuildType({
                 commandArgs = "--pull"
             }
         }
+        script {
+            name = "Check System Info"
+            scriptContent = "uname -a"
+        }    
     }
 })
