@@ -94,6 +94,9 @@ object BuildDockerImage : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
+    params {
+        param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%") // Reference the secret variable
+    }
     steps {
         dockerCommand {
             commandType = build {
@@ -107,7 +110,7 @@ object BuildDockerImage : BuildType({
         }
         script {
             name = "Generate a Docker SBOM"
-            scriptContent = "/home/guyc/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number%"
+            scriptContent = "/home/guyc/.scribe/bin/valint bom "+"mkjetbrains/todo-backend:%build.number% " + "-P $SCRIBE_TOKEN" 
         }    
     }
 })
