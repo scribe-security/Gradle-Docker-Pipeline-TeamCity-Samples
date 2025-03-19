@@ -117,7 +117,7 @@ object BuildDockerImage : BuildType({
             
             scriptContent = """
                 az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
-                /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.2 -o attest --kms azurekms://guys-keys.vault.azure.net/
+                /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.2 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
                 printenv
             """.trimIndent()
         }    
