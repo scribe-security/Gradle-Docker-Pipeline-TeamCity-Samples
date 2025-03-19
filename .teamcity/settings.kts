@@ -95,9 +95,7 @@ object BuildDockerImage : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
-    params {
-        param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
-    }
+    
     steps {
         dockerCommand {
             commandType = build {
@@ -113,6 +111,7 @@ object BuildDockerImage : BuildType({
             name = "Generate a Docker SBOM 12"
             
             scriptContent = """
+                az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
                 /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.2
                 printenv
             """.trimIndent()
