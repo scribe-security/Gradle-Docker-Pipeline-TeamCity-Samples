@@ -96,7 +96,10 @@ object BuildDockerImage : BuildType({
         root(DslContext.settingsRoot)
     }
     params {
-        param("env.SCRIBE_TOKEN", "%env.SCRIBE_TOKEN%")
+        param("env.SCRIBE_TOKEN", "")
+        param("env.APP_ID", "12b4f8a4-b9a2-4e89-a886-3064b9e98ef6")
+        param("env.CLIENT_SECRET", "")
+        param("env.TENANT_ID", "baa95f6e-53b4-4508-a093-6fce300256b4")
     }
     steps {
         dockerCommand {
