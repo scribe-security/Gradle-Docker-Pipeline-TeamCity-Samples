@@ -111,7 +111,7 @@ object BuildDockerImage : BuildType({
         }
         script {
             name = "Generate a Docker SBOM 12"
-            scriptContent = 
+            
             scriptContent = """
                 /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.2
                 printenv
