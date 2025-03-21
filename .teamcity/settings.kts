@@ -86,6 +86,15 @@ object BuildApp : BuildType({
             tasks = "clean build"
             jdkHome = "%env.JDK_11%"
         }
+        script {
+            name = "Generate a Source SBOM 1"
+            
+            scriptContent = """
+                az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
+                /home/guyc/.scribe/bin/valint bom git:. -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.3 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
+                printenv
+            """.trimIndent()
+        }
     }
 })
 
