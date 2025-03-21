@@ -96,9 +96,10 @@ object BuildApp : BuildType({
             name = "Generate a Source SBOM 1"
             
             scriptContent = """
+                export CURRENT=$(pwd)
                 az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
-                /home/guyc/.scribe/bin/valint bom dir:. -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.3 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
-                printenv
+                /home/guyc/.scribe/bin/valint bom dir:$CURRENT -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
+                
             """.trimIndent()
         }
     }
@@ -127,7 +128,7 @@ object BuildDockerImage : BuildType({
             
             scriptContent = """
                 az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
-                /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.3 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
+                /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
                 printenv
             """.trimIndent()
         }    
