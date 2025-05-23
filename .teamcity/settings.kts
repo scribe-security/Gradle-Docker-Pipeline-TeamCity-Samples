@@ -93,11 +93,22 @@ object BuildApp : BuildType({
             jdkHome = "%env.JDK_11%"
         }
         script {
+            name = "Login To Azure Key Vault"
+            
+            scriptContent = """
+                echo '----------Key Vault---------------'
+                C:\Users\ContainerUser\Azure\CLI2\wbin\az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
+                
+                
+            """.trimIndent()
+        }
+
+
+        script {
             name = "Generate a Source SBOM 1"
             
             scriptContent = """
-                echo '-------------------------------'
-                C:\Users\ContainerUser\Azure\CLI2\wbin\az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
+                echo '-----------Valint-----------------'
                 C:\Users\ContainerUser\valint bom dir:$(pwd) -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
                 
             """.trimIndent()
