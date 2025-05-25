@@ -101,6 +101,7 @@ object BuildApp : BuildType({
                 set AZURE_TENANT_ID=%env.TENANT_ID%
                 set AZURE_CLIENT_ID=%env.APP_ID%
                 set AZURE_CLIENT_SECRET=%env.CLIENT_SECRET%
+                call C:\Users\ContainerUser\Azure\CLI2\wbin\az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID% 
                 if errorlevel 1 exit /b 1
 
                 C:\Users\ContainerUser\valint bom dir:$(pwd) -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
