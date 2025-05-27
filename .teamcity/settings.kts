@@ -97,14 +97,17 @@ object BuildApp : BuildType({
             name = "Generate a Source SBOM 1"
             
             scriptContent = """
-                echo '-----------Az Login & Valint-----------------'
+                echo '-----------Az-Login-and-Valint-Source-----------------'
+                echo "%teamcity.build.checkoutDir%"
                 set AZURE_TENANT_ID=%env.TENANT_ID%
                 set AZURE_CLIENT_ID=%env.APP_ID%
                 set AZURE_CLIENT_SECRET=%env.CLIENT_SECRET%
                 call C:\Users\ContainerUser\Azure\CLI2\wbin\az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID% 
                 if errorlevel 1 exit /b 1
-
-                C:\Users\ContainerUser\valint bom dir:$(pwd) -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
+                set DEBUG=true 
+                set BUILD_URL="build-machine-url"
+                cd C:\Users\ContainerUser
+                valint bom dir:%teamcity.build.checkoutDir% -vv -P %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
                 
             """.trimIndent()
         }
@@ -133,9 +136,18 @@ object BuildDockerImage : BuildType({
             name = "Generate a Docker SBOM 12"
             
             scriptContent = """
-                az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID%
-                /home/guyc/.scribe/bin/valint bom mkjetbrains/todo-backend:%build.number% -vv %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one
-                printenv
+                echo echo '-----------Az-Login-and-Valint-Image-----------------'
+                echo "%teamcity.build.checkoutDir%"
+                set AZURE_TENANT_ID=%env.TENANT_ID%
+                set AZURE_CLIENT_ID=%env.APP_ID%
+                set AZURE_CLIENT_SECRET=%env.CLIENT_SECRET%
+                call C:\Users\ContainerUser\Azure\CLI2\wbin\az login --service-principal -u %env.APP_ID% -p %env.CLIENT_SECRET% --tenant %env.TENANT_ID% 
+                if errorlevel 1 exit /b 1
+                set DEBUG=true 
+                set BUILD_URL="build-machine-url"
+                cd C:\Users\ContainerUser
+                valint bom mkjetbrains/todo-backend:%build.number% -vv -P %env.SCRIBE_TOKEN% --product-key Team-City-Demo --product-version 1.0.4 -o attest --kms azurekms://guys-keys.vault.azure.net/code-signer-one                
+
             """.trimIndent()
         }    
     }
